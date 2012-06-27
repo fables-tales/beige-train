@@ -37,8 +37,15 @@ def jquery():
 
 @app.route('/')
 def hello():
-    return open("html/index.html").read().replace("ff00ff",generate_color()) 
+    return open("html/index.html").read()
 
+@app.route("/style.css")
+def stylesheet():
+    return open("html/style.css").read()
+
+@app.route("/beige.js")
+def beigejs():
+    return open("html/beige.js").read().replace("ff00ff",generate_color()) 
 
 @app.route("/getcolor")
 def givemeacolor():
