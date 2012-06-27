@@ -11,15 +11,22 @@
                 return "ff00ff"
             }
 
+
+            function recolor() {
+                $.get("/getcolor", function(response) {
+                    document.bgColor = "#" + response;
+                });
+            }
+
             window.onload = function() {
                 document.bgColor = "#" + getColor();
                 $("#isbeige").click(function() {
                         console.log("/classify/1/" + getColor());
-                        $.get("/classify/1/" + getColor());
+                        $.get("/classify/1/" + getColor(), recolor);
                 });
 
                 $("#notbeige").click(function() {
-                        $.get("/classify/0/" + getColor());
+                        $.get("/classify/0/" + getColor(), recolor);
                 });
             }
 

@@ -40,6 +40,10 @@ def hello():
     return open("html/index.html").read().replace("ff00ff",generate_color()) 
 
 
+@app.route("/getcolor")
+def givemeacolor():
+    return generate_color()
+
 @app.route('/classify/<int:value>/<color>')
 def respond_color(value, color):
     conn = create_conn()
