@@ -4,6 +4,19 @@ from flask import Flask
 app = Flask(__name__)
 
 import random
+import psycopg2
+
+
+def create_conn():
+    conn = None
+    if os.environ.has_key("DATABASE_URL"):
+        username = os.environ["DATABASE_URL"].split(":")[1].replace("//","")
+        password = os.environ["DATABASE_URL"].split(":")[2].split("@")[0]
+        host = os.environ["DATABASE_URL"].split(":")[2].split("@")[1].split("/")[0]
+        dbname = os.environ["DATABASE_URL"].split(":")[2].split("@")[1].split("/")[1] 
+        conn = psycopg2.connect(dbname=dbname, user=username, password=password, host=host) 
+    return conn
+
 
 def generate_color():
     r = random.randint(0,255)
@@ -16,18 +29,23 @@ def generate_color():
     while len(hg) <= 1: hg = "0" + hg
     while len(hb) <= 1: hb = "0" + hb
 
-    return "#" + hr + hg + hb
+    return hr + hg + hb
 
-
+@app.route("/js/jquery.min.js")
+def jquery():
+    return open("js/jquery.min.js").read()
 
 @app.route('/')
 def hello():
-    return open("html/index.html").read() 
+    return open("html/index.html").read().replace("ff00ff",generate_color()) 
 
 
-@app.route('/classify/<int:value>')
-def respond_color(value):
-    return "you respondeded",value
+@app.route('/classify/<int:value>/<color>')
+def respond_color(value, color):
+    conn = create_conn()
+    cursor = conn.cursor()
+    cursor.execute("INSERT INTO colors VALUES (%s %d)", (color, value))    
+    conn.commit()
         
 
 if __name__ == '__main__':
