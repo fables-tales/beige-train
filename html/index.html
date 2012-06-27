@@ -2,36 +2,14 @@
     <head>
         <title>Beige classifier</title>
         <script src="js/jquery.min.js" type="text/javascript"></script>
+        <script type="text/javascript" src="beige.js"></script>
     </head>
     <body>
-        <button id="isbeige">It's beige</button>
-        <button id="notbeige">It's not beige</button>
-        <script type="text/javascript">
-            var color = "ff00ff"
-            function getColor() {
-                return color
-            }
+        <h1>IS BEIGE?</h1>
+        <button id="isbeige" disabled="disabled">It's beige</button>
+        <button id="notbeige" disabled="disabled">It's not beige</button>
+        <div id="countdownbar">&nbsp;</div>
 
-
-            function recolor() {
-                $.get("/getcolor", function(response) {
-                    document.bgColor = "#" + response;
-                    color = response
-                });
-            }
-
-            window.onload = function() {
-                document.bgColor = "#" + getColor();
-                $("#isbeige").click(function() {
-                        console.log("/classify/1/" + getColor());
-                        $.get("/classify/1/" + getColor(), recolor);
-                });
-
-                $("#notbeige").click(function() {
-                        $.get("/classify/0/" + getColor(), recolor);
-                });
-            }
-
-        </script>
+        <link href="style.css" rel="stylesheet" type="text/css">
     </body>
 </html>
