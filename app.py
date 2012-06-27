@@ -44,7 +44,7 @@ def hello():
 def respond_color(value, color):
     conn = create_conn()
     cursor = conn.cursor()
-    cursor.execute("INSERT INTO colors VALUES (%s %d)", (color, value))    
+    cursor.execute("INSERT INTO colors VALUES (%s,%s)", (color, str(value)))    
     conn.commit()
         
 
