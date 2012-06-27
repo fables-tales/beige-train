@@ -46,6 +46,7 @@ def respond_color(value, color):
     cursor = conn.cursor()
     cursor.execute("INSERT INTO colors VALUES (%s,%s)", (color, str(value)))    
     conn.commit()
+    return "yup"
         
 
 if __name__ == '__main__':
