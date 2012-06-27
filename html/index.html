@@ -7,14 +7,16 @@
         <button id="isbeige">It's beige</button>
         <button id="notbeige">It's not beige</button>
         <script type="text/javascript">
+            var color = "ff00ff"
             function getColor() {
-                return "ff00ff"
+                return color
             }
 
 
             function recolor() {
                 $.get("/getcolor", function(response) {
                     document.bgColor = "#" + response;
+                    color = response
                 });
             }
 
